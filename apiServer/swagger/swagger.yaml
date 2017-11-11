@@ -13,7 +13,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "virtserver.swaggerhub.com"
-basePath: "/v2"
+basePath: "/v1"
 schemes:
 - "https"
 - "http"
@@ -23,7 +23,7 @@ paths:
       tags:
       - "default"
       summary: "Detects text clickbaitiness"
-      operationId: "controllers.default_controller.detect_get"
+      operationId: "controllers.default_controller.detect_post"
       consumes:
       - "application/json"
       produces:
@@ -47,11 +47,11 @@ paths:
         405:
           description: "Invalid input"
   /summary:
-    get:
+    post:
       tags:
       - "default"
       summary: "get the summary of page at URL"
-      operationId: "controllers.default_controller.summary_get"
+      operationId: "controllers.default_controller.summary_post"
       consumes:
       - "application/json"
       produces:
