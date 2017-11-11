@@ -53,7 +53,7 @@ paths:
       summary: "get the summary of page at URL"
       operationId: "controllers.default_controller.summary_post"
       consumes:
-      - "application/json"
+      - "text/plain"
       produces:
       - "application/json"
       parameters:
