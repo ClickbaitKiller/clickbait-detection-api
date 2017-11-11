@@ -12,5 +12,5 @@
      - category is optional and defines the type of content
 
 **/v1/summary**:
-	- params:
-		- URL of the page to summarize
+  - params:
+    - URL of the page to summarize
