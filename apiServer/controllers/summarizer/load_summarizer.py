@@ -22,7 +22,7 @@ def load_summarizer():
   return summarize
 
 if __name__ == '__main__':
-  summarize = init_summarizer()
+  summarize = load_summarizer()
 
   url = 'http://www.breitbart.com/video/2017/11/10/alabama-abc-affiliate-cant-find-one-voter-believes-wapo-report-roy-moore-man-street-segment'
   print(summarize(url))
