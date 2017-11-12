@@ -21,7 +21,7 @@ def detect_post(parameters) -> dict:
         parameter, score = elem
         return {
             'id': parameter['id'],
-            'clickbaitiness': score
+            'score': score
         }
 
     return list(map(reconstruct, res))

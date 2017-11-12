@@ -8,9 +8,9 @@ from selenium import webdriver
 url = 'https://www.buzzfeed.com/beckybarnicoat/autumnal-dresses-perfect-for-a-cold-november-day?' \
       'utm_term=.vflRJgz57p#.acxDezxw4o'
 
-f = open('test.html', 'r')
-html_content = f.read()
-f.close()
+#f = open('test.html', 'r')
+#html_content = f.read()
+#f.close()
 
 
 class MyHTMLParser(HTMLParser):
