@@ -13,7 +13,7 @@ def load_summarizer():
 
   def summarize(url):
     request = build_request(url)
-
+    print(request)
     driver.get(request)
     sleep(1)
     container = driver.find_element_by_id('sm_container_output')

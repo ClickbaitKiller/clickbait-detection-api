@@ -19,5 +19,4 @@ def detect_post(parameters) -> str:
     return list(map(reconstruct, res))
 
 def summary_post(parameters) -> str:
-    print(str(parameters))
-    return summarize(str(parameters))
+    return summarize(parameters.decode('ascii'))
