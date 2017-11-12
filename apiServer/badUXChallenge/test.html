@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #pwd-input input, #name-input input {
+            width: 1em;
+        }
+    </style>
+</head>
+<body>
+    <label>Enter email length</label>
+    <input id="letter-count" type="text">
+    <button id="validate-letter-count">Validate</button>
+    <div id="name-input">
+
+    </div>
+
+
+    <label>Enter password length</label>
+    <input id="pwd-letter-count" type="text">
+    <button id="pwd-validate-letter-count">Validate</button>
+    <div id="pwd-input">
+
+    </div>
+
+    <button id="login">Login</button>
+    <div id="result"></div>
+</body>
+
+<script>
+    document.getElementById('validate-letter-count').onclick = function () {
+        var x = document.getElementById('letter-count').value
+        for (var i = 0; i < x; i++) {
+            document.getElementById('name-input').appendChild(document.createElement('input'))
+        }
+    };
+
+
+    document.getElementById('pwd-validate-letter-count').onclick = function () {
+        var x = document.getElementById('pwd-letter-count').value
+        for (var i = 0; i < x; i++) {
+            document.getElementById('pwd-input').appendChild(document.createElement('input'))
+        }
+    };
+
+    document.getElementById('login').onclick = function () {
+        var login = ''
+        var el = document.getElementById('name-input').firstElementChild
+
+        do {
+            login+=el.value
+            el = el.nextElementSibling;
+        } while(el)
+
+        var pass = ''
+        var el = document.getElementById('pwd-input').firstElementChild
+
+        do {
+            pass+=el.value
+            el = el.nextElementSibling;
+        } while(el)
+
+        document.getElementById('result').innerHTML = 'hello ' + login + ' your pass is ' + pass;
+
+    }
+</script>
+</html>

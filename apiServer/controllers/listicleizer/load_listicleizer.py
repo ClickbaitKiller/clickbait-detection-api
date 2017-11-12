@@ -22,6 +22,8 @@ def load_listicleizer():
 
         nested_headers = html_header_extractor.get_nested()
 
+        # just a complicated function that returns the longest list of consecutive headers (
+        # aka. python scoping is a b**ch)
         def rec_longest(headers, longest_list, longest_list_size):
 
             if len(headers['list']) > longest_list_size:
