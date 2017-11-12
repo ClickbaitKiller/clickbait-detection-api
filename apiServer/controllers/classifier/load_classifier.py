@@ -8,8 +8,9 @@ def load_classifier():
 
   return predict
 
-predict = load_classifier()
+if __name__ == '__main__':
+  predict = load_classifier()
 
-X = ['you will never believe what happens next', 'Obama declares war']
+  X = ['you will never believe what happens next', 'Obama declares war']
 
-print(predict(X))
+  print(predict(X))

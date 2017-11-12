@@ -1,7 +1,8 @@
 from controllers.classifier.load_classifier import load_classifier
+from controllers.summarizer.load_summarizer import load_summarizer
 
 predict = load_classifier()
-
+summarize = load_summarizer()
 
 def detect_post(parameters) -> str:
 
@@ -18,4 +19,5 @@ def detect_post(parameters) -> str:
     return list(map(reconstruct, res))
 
 def summary_post(parameters) -> str:
-    return 'do some magic!'
+    print(str(parameters))
+    return summarize(str(parameters))
