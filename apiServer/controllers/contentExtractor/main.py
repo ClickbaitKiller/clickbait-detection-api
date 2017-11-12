@@ -95,11 +95,6 @@ class MyHTMLParser(HTMLParser):
         return process_structure(structure)
 
 
-
-def fetch_html(url):
-    pass
-
-
 def get_listicle_headers(html):
 
     html_header_extractor = MyHTMLParser()
