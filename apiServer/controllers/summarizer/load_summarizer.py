@@ -7,7 +7,7 @@ def load_summarizer():
 
   def build_request(url):
       base = 'http://smmry.com/'
-      end = '/#&SM_LENGTH=1'
+      end = '#&SM_LENGTH=1'
       return base + url + end
 
   def summarize(url):
