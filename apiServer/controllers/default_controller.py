@@ -1,5 +1,8 @@
 from controllers.classifier.load_classifier import load_classifier
 from controllers.summarizer.load_summarizer import load_summarizer
+import re
+
+regexp = re.compile(r'\d')
 
 predict = load_classifier()
 summarize = load_summarizer()
@@ -19,4 +22,8 @@ def detect_post(parameters) -> str:
     return list(map(reconstruct, res))
 
 def summary_post(parameters) -> str:
-    return summarize(parameters.decode('ascii'))
+    text, url = parameters['text'], parameters['url']
+    if regexp.search(text): # contains a number -> listicle
+        pass # todo
+    else:
+        return summarize(url)

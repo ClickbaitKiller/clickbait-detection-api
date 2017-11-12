@@ -2,7 +2,7 @@ from time import sleep
 from selenium import webdriver
 
 def load_summarizer():
-
+  memo = {}
   driver = webdriver.PhantomJS() # or add to your PATH
   driver.set_window_size(1920, 1200) # optional
 
@@ -12,12 +12,16 @@ def load_summarizer():
       return base + url + end
 
   def summarize(url):
+    if url in memo:
+      return memo[url]
+
     request = build_request(url)
     print(request)
     driver.get(request)
-    sleep(1)
+    sleep(3)
     container = driver.find_element_by_id('sm_container_output')
 
+    memo[url] = container.text
     return container.text
 
   return summarize
