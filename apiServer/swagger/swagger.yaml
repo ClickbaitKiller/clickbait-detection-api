@@ -91,7 +91,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-      clickbaitiness:
+      score:
         type: "number"
         format: "float32"
         example: 0.78

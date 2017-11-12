@@ -45,4 +45,5 @@ def summary_post(parameters) -> dict:
             'summary': summarize(url)
         }
 
+
     return memo[(url, text)]
