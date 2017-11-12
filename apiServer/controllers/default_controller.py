@@ -9,6 +9,8 @@ predict = load_classifier()
 summarize = load_summarizer()
 listicleizer = load_listicleizer()
 
+memo = {}
+
 
 def detect_post(parameters) -> dict:
 
@@ -26,14 +28,21 @@ def detect_post(parameters) -> dict:
 
 
 def summary_post(parameters) -> dict:
+
     text, url = parameters['text'], parameters['url']
+
+    if (url, text) in memo:
+      return memo[(url, text)]
+
     if regexp.search(text): # contains a number -> listicle
-        return {
+        memo[(url, text)] = {
             'type': 'listicle',
             'summary': listicleizer(url)
         }
     else:
-        return {
+        memo[(url, text)] = {
             'type': 'summary',
             'summary': summarize(url)
         }
+
+    return memo[(url, text)]
