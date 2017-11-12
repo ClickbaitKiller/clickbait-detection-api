@@ -63,6 +63,9 @@ paths:
         required: true
         schema:
           type: object
+          required:
+            - text
+            - url
           properties:
             text:
               type: string
