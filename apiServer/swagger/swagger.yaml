@@ -53,7 +53,7 @@ paths:
       summary: "get the summary of page at URL"
       operationId: "controllers.default_controller.summary_post"
       consumes:
-      - "text/plain"
+      - "application/json"
       produces:
       - "application/json"
       parameters:
@@ -62,8 +62,14 @@ paths:
         description: "Page to summarize"
         required: true
         schema:
-          type: "string"
-          example: "\"http://buzzfeed.com/this-freaking-crappy-article\""
+          type: object
+          properties:
+            text:
+              type: string
+              example: This freaking crappy article
+            url:
+              type: string
+              example: http://buzzfeed.com/this-freaking-crappy-article
       responses:
         200:
           description: "successful operation"
@@ -87,8 +93,8 @@ definitions:
         format: "int64"
       clickbaitiness:
         type: "number"
-        format: "float64"
-        example: 0.7800000000000000266453525910037569701671600341796875
+        format: "float32"
+        example: 0.78
   parameters:
     required:
     - "id"
