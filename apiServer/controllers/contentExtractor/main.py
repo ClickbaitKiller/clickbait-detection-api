@@ -1,6 +1,9 @@
 import json
 from html.parser import HTMLParser
 import re
+from time import sleep
+
+from selenium import webdriver
 
 url = 'https://www.buzzfeed.com/beckybarnicoat/autumnal-dresses-perfect-for-a-cold-november-day?' \
       'utm_term=.vflRJgz57p#.acxDezxw4o'
@@ -31,13 +34,14 @@ class MyHTMLParser(HTMLParser):
     def handle_endtag(self, tag):
 
         if re.match(self.HEADER_PATTERN, tag):
+            self.incomplete_tag['content'].strip()
             self.header_list.append(self.incomplete_tag)
             self.incomplete_tag = None
 
     def handle_data(self, data):
 
         if self.incomplete_tag is not None:
-            self.incomplete_tag['content'] += data
+            self.incomplete_tag['content'] += ' ' + data.strip()
 
     def error(self, message):
         print('Parse error', message)
@@ -54,8 +58,6 @@ class MyHTMLParser(HTMLParser):
         }
 
         def process_structure(struct):
-
-            print('called on ' + struct['type'] + ' ' + struct['content'])
 
             struct_list = struct['list']
 
@@ -94,35 +96,58 @@ class MyHTMLParser(HTMLParser):
 
         return process_structure(structure)
 
+def load_listicleizer():
 
-def get_listicle_headers(html):
+    driver = webdriver.PhantomJS() # or add to your PATH
+    driver.set_window_size(1920, 1200) # optional
 
-    html_header_extractor = MyHTMLParser()
-    html_header_extractor.feed(html)
+    def fetch_html(url):
+        driver.get(url)
+        sleep(1)
+        return driver.page_source
 
-    nested_headers = html_header_extractor.get_nested()
+    def get_listicle_headers(html):
 
-    def rec_longest(headers, longest_list, longest_list_size):
+        html_header_extractor = MyHTMLParser()
+        html_header_extractor.feed(html)
 
-        if len(headers['list']) > longest_list_size:
-            longest_list_size = len(headers['list'])
-            longest_list = headers
+        nested_headers = html_header_extractor.get_nested()
 
-        for x in headers['list']:
-            longest_list, longest_list_size = rec_longest(x, longest_list, longest_list_size)
+        def rec_longest(headers, longest_list, longest_list_size):
 
-        return longest_list, longest_list_size
+            if len(headers['list']) > longest_list_size:
+                longest_list_size = len(headers['list'])
+                longest_list = headers
 
-    longest_list, longest_list_size = rec_longest(
-        nested_headers, nested_headers, len(nested_headers['list']))
+            for x in headers['list']:
+                longest_list, longest_list_size = rec_longest(x, longest_list, longest_list_size)
 
-    main_title = longest_list['content']
-    items = list(map(lambda x: x['content'], longest_list['list']))
+            return longest_list, longest_list_size
 
-    print(main_title, longest_list_size, items)
+        longest_list, longest_list_size = rec_longest(
+            nested_headers, nested_headers, len(nested_headers['list']))
 
-    return nested_headers
+        main_title = longest_list['content']
+        items = list(map(lambda x: x['content'], longest_list['list']))
+
+        def build_html(title, items):
+            ret = '<b>'+title+'</b>'
+            ret += '<ul>'
+            for i in items:
+                ret += '\n<li>'+i+'</li>'
+            ret += '</ul>'
+
+            return ret
+
+        return build_html(main_title, items)
+
+    def listicleize(url):
+        return get_listicle_headers(fetch_html(url))
+
+    return listicleize
 
 if __name__ == '__main__':
-    print(html_content)
-    print(json.dumps(get_listicle_headers(html_content), indent=2))
+
+    listicleize = load_listicleizer()
+
+    print(listicleize(url))
